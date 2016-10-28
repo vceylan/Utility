@@ -1,0 +1,66 @@
+﻿<div class="home-screen" ng-controller="HomeController" ng-init="initialize()">
+    <div>
+        <div class="user-info-label">Default User File Path </div>
+        <div class="user-info-control">
+            <input class="form-control file-path-input" type="text" id="file-path" ng-model="FilePath"/>
+        </div>
+        <div class="user-info-control">
+            <button class="btn btn-sm btn-success" ng-click="setDefaultUserInfoFilePath()">Set File Path</button>
+        </div>
+        <div class="user-info-control">
+            <button class="btn btn-sm btn-primary" ng-click="getDefaultUserInfoFilePath()">Get File Path</button>
+        </div>
+    </div>
+
+    <div class="user-info-section">
+        <div class="user-info-cell">
+            <div class="user-info-label">User Id</div>
+            <div class="user-info-control">
+                <input class="form-control" type="number" ng-model="selectedUser.UserId" />
+            </div>
+        </div>
+        <div class="user-info-cell">
+            <div class="user-info-label">Nt Login</div>
+            <div class="user-info-control">
+                <input class="form-control" type="text" ng-model="selectedUser.NtLogin" />
+            </div>
+        </div>
+        <div class="user-info-cell">
+            <div class="user-info-label">Description</div>
+            <div class="user-info-control">
+                <input class="form-control" type="text" ng-model="selectedUser.Description"/>
+            </div>
+        </div>
+
+        <div>
+            <button class="btn btn-warning" ng-click="clearUserInfo()">Clear</button>
+            <button class="btn btn-success" ng-click="saveUser()">Save</button>
+        </div>
+    </div>
+
+    <div ng-show="users && users.length > 0">
+        <table class="table table-bordered table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th>User Id</th>
+                    <th>Nt Login</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <td ng-bind="user.UserId"></td>
+                    <td ng-bind="user.NtLogin"></td>
+                    <td ng-bind="user.Description"></td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" ng-click="selectUser(user)">Select for Update</button>
+                        <button ng-show="!user.IsDefault" class="btn btn-sm btn-danger" ng-click="removeUser(user.UserId)">Delete</button>
+                        <button ng-show="!user.IsDefault" class="btn btn-sm btn-primary" ng-click="setUserDefault(user.UserId)">Set Default</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

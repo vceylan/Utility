@@ -1,0 +1,12 @@
+Model/bin/
+Model/obj/
+packages/
+UserSwitcher/bin/
+UserSwitcher/obj/
+UserSwitherComponent/bin/
+UserSwitherComponent/obj/
+.vs/Utility/v14/.suo
+Utility.v11.suo
+UserSwitcher/Database/
+UserSwitcher/Database/
+bfg.jar

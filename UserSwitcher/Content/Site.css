@@ -1,0 +1,51 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    min-width: 280px;
+}
+
+.home-screen {
+    padding: 15px 0 0 0;
+}
+
+.user-info-section {
+    padding: 15px 0 15px 0;
+}
+
+.user-info-label {
+    display: inline-block;
+    /*min-width: 150px;*/
+    margin-right: 20px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.user-info-control {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.display-inline {
+    display: inline-block !important;
+}
+
+.user-info-cell {
+    display: inline-block;
+    margin: 15px 5px;
+}
+
+.file-path-input {
+    width: 500px !important;
+}
