@@ -3,6 +3,8 @@
         $scope.users = [];
         $scope.selectedUser = {};
         $scope.getDefaultUserInfoFilePath();
+        $scope.propertyName = null;
+        $scope.reverse = false;
     };
     
     $scope.saveUser = function () {
@@ -47,7 +49,7 @@
     $scope.getUserList = function () {
         $scope.call({ api: '../Data/GetUsers', method: 'POST' }, function (response) {
             if (response == undefined) {
-                alert("Error Occourred while getting users!");
+                alert("Error Occurred while getting users!");
             } else {
                 $scope.users = response;
             }
@@ -61,10 +63,9 @@
             } else {
                 alert(response.Message);
             }
-
-            if (!$scope.users || $scope.users.length === 0) {
-                $scope.getUserList();
-            }
+         
+            $scope.getUserList();
+            
         });
     };
 
@@ -76,6 +77,21 @@
                 alert(response.Message);
             }
         });
+    };
+
+    $scope.sortBy = function (propertyName) {
+        if ($scope.propertyName === propertyName) {
+            if ($scope.reverse) {
+                $scope.propertyName = null;
+            } else {
+                $scope.propertyName = propertyName;
+            }
+
+            $scope.reverse = !$scope.reverse;
+        } else {
+            $scope.reverse = false;
+            $scope.propertyName = propertyName;
+        }
     };
 
     // options = {api, data, method }

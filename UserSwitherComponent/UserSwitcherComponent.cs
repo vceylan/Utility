@@ -64,8 +64,31 @@ namespace UserSwitherComponent
 
         public List<UserSwitchModel> GetUsers()
         {
-            var userList = ReadJson<List<UserSwitchModel>>(DbUsersFilePath);
-            return userList.OrderBy(c=>c.UserId).ToList() ?? new List<UserSwitchModel>();
+            var users = ReadJson<List<UserSwitchModel>>(DbUsersFilePath);
+
+            if (users == null)
+            {
+                return new List<UserSwitchModel>();
+            }
+
+            var globalBilgiUserFilePath = File.ReadAllText(GlobalBilgiUserFileInfoFilePath);
+            if (!File.Exists(globalBilgiUserFilePath))
+            {
+                users = users.Select(c => new UserSwitchModel { UserId = c.UserId, NtLogin = c.NtLogin, Description = c.Description, IsDefault = false }).ToList();
+            }
+            else
+            {
+                var currentDefaultUserNtLogin = File.ReadAllText(globalBilgiUserFilePath);
+
+                foreach (var user in users)
+                {
+                    user.IsDefault = user.NtLogin == currentDefaultUserNtLogin;
+                }
+            }
+
+            WriteJson(users, DbUsersFilePath);
+
+            return users;
         }
 
         public OperationResult<string> GetDefaultUserInfoFilePath()
@@ -89,7 +112,7 @@ namespace UserSwitherComponent
             catch (Exception ex)
             {
                 result.Status = false;
-                result.Message = "Error Occourred!";
+                result.Message = "Error Occurred! Exception : " + ex.Message;
                 result.Data = ex.Message;
             }
 
@@ -109,15 +132,31 @@ namespace UserSwitherComponent
                 }
                 else
                 {
+                    var globalBilgiUserFilePath = File.ReadAllText(GlobalBilgiUserFileInfoFilePath);
+
+                    if (!File.Exists(globalBilgiUserFilePath))
+                    {
+                        var file = string.IsNullOrEmpty(globalBilgiUserFilePath) ? File.Create(filePath) : File.Create(globalBilgiUserFilePath);
+                        filePath = file.Name;
+                        file.Close();
+                    }
+                    else
+                    {
+                        var temp = File.ReadAllText(globalBilgiUserFilePath);
+                        File.Delete(globalBilgiUserFilePath);
+                        var file = File.Create(filePath);
+                        file.Close();
+                        File.WriteAllText(filePath, temp);
+                    }
+
                     File.WriteAllText(GlobalBilgiUserFileInfoFilePath, filePath);
                 }
-
             }
             catch (Exception ex)
             {
                 result.Status = false;
-                result.Message = "Error Occourred!";
-                result.Data = ex.Message;
+                result.Message = "Error Occurred! Exception : " + ex.Message;
+                result.Data = filePath;
             }
 
             return result;
@@ -126,17 +165,10 @@ namespace UserSwitherComponent
         public OperationResult<string> SetDefaultUser(int userId)
         {
             var result = new OperationResult<string> { Status = true, Message = "User Activated!" };
-            
+
             try
             {
                 var globalBilgiUserFilePath = File.ReadAllText(GlobalBilgiUserFileInfoFilePath);
-
-                if (!File.Exists(globalBilgiUserFilePath))
-                {
-                    var file = File.Create(globalBilgiUserFilePath);
-                    file.Close();
-                }
-
                 var users = GetUsers();
 
                 foreach (var user in users)
@@ -158,13 +190,13 @@ namespace UserSwitherComponent
             catch (Exception ex)
             {
                 result.Status = false;
-                result.Message = "Error Occurred!";
+                result.Message = "Error Occurred! Exception : " + ex.Message;
                 result.Data = ex.Message;
             }
 
             return result;
         }
-        
+
         public OperationResult<string> SaveUser(UserSwitchModel selectedUser)
         {
             var result = new OperationResult<string> { Status = true, Message = "User Added!" };
@@ -179,7 +211,7 @@ namespace UserSwitherComponent
                 else
                 {
                     var users = GetUsers();
-                    var existUser = users.FirstOrDefault(u => u.UserId == selectedUser.UserId);
+                    var existUser = users.FirstOrDefault(u => u.UserId == selectedUser.UserId || u.NtLogin == selectedUser.NtLogin);
 
                     if (existUser == null)
                     {
@@ -188,8 +220,17 @@ namespace UserSwitherComponent
                     else
                     {
                         var index = users.IndexOf(existUser);
-                        users[index].Description = selectedUser.Description;
-                        users[index].NtLogin = selectedUser.NtLogin;
+
+                        if (existUser.UserId == selectedUser.UserId)
+                        {
+                            users[index].Description = selectedUser.Description;
+                            users[index].NtLogin = selectedUser.NtLogin;
+                        }
+                        else
+                        {
+                            result.Status = false;
+                            result.Message = "Same NtLogin exist!";
+                        }
                     }
 
                     WriteJson(users, DbUsersFilePath);
@@ -198,7 +239,7 @@ namespace UserSwitherComponent
             catch (Exception ex)
             {
                 result.Status = false;
-                result.Message = "Error Occurred!";
+                result.Message = "Error Occurred! Exception : " + ex.Message;
                 result.Data = ex.Message;
             }
 
@@ -234,7 +275,7 @@ namespace UserSwitherComponent
             catch (Exception ex)
             {
                 result.Status = false;
-                result.Message = "Error Occurred!";
+                result.Message = "Error Occurred! Exception : " + ex.Message;
                 result.Data = ex.Message;
             }
 

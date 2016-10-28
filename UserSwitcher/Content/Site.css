@@ -49,3 +49,29 @@ textarea {
 .file-path-input {
     width: 500px !important;
 }
+
+.user-info-table-userid {
+    width: 90px;    
+}
+ 
+.user-info-table-ntlogin {
+    width: 240px;
+}
+.user-info-table-action {
+    width: 290px;
+}
+ 
+.sortorder:after {
+  content: '\25b2';
+}
+.sortorder.reverse:after {
+  content: '\25bc';
+}
+ 
+.user-info-table th {
+    cursor: pointer;
+}
+
+.text-small {
+    font-size: xx-small;
+}
