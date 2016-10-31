@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserSwitcher", "UserSwitcher\UserSwitcher.csproj", "{0D8759A2-919A-4365-AA2B-2BCA25A670B8}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{FD1B1135-7471-4A3C-B895-08573FA27D25}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{AF89E3A7-B802-4B0B-8FD9-74B67CF1D089}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserSwitcherApp", "UserSwitcherApp\UserSwitcherApp.csproj", "{A1170EA4-80B9-4DC9-A884-198D52EF6946}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{AF89E3A7-B802-4B0B-8FD9-74B67CF1D089}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF89E3A7-B802-4B0B-8FD9-74B67CF1D089}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF89E3A7-B802-4B0B-8FD9-74B67CF1D089}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1170EA4-80B9-4DC9-A884-198D52EF6946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1170EA4-80B9-4DC9-A884-198D52EF6946}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1170EA4-80B9-4DC9-A884-198D52EF6946}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1170EA4-80B9-4DC9-A884-198D52EF6946}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
