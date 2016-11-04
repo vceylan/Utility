@@ -6,7 +6,7 @@
         $scope.propertyName = null;
         $scope.reverse = false;
     };
-    
+
     $scope.saveUser = function () {
         $scope.call({ api: '../Action/SaveUser', method: 'POST', data: { user: $scope.selectedUser } }, function (response) {
             if (response.Status) {
@@ -49,7 +49,7 @@
     $scope.getUserList = function () {
         $scope.call({ api: '../Data/GetUsers', method: 'POST' }, function (response) {
             if (response == undefined) {
-                alert("Error Occurred while getting users!");
+                alert("Error Occourred while getting users!");
             } else {
                 $scope.users = response;
             }
@@ -63,9 +63,10 @@
             } else {
                 alert(response.Message);
             }
-         
-            $scope.getUserList();
-            
+
+            if (!$scope.users || $scope.users.length === 0) {
+                $scope.getUserList();
+            }
         });
     };
 
